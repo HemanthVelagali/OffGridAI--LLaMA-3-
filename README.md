@@ -23,10 +23,9 @@
 Install Ollama to load and run the LLaMA 3 model locally.
 
 Download the LLaMA 3 model using the ollama command:
+```bash
+   ollama pull llama3 
 
-bash
-Copy code
-ollama pull llama3
 Ensure that Ollama is running and the LLaMA 3 model is loaded.
 
 Running the Application
