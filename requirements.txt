@@ -1,0 +1,15 @@
+Flask==2.2.3
+langchain==0.0.110  # Specify the version based on your project needs
+SpeechRecognition==3.10.1
+PyAudio==0.2.13  # Required for microphone input; make sure to install it according to your system requirements
+torch==2.0.1  # Specify the version according to your requirements
+torchvision==0.15.0  # Specify the version according to your requirements
+torchaudio==2.0.2  # Specify the version according to your requirements
+
+
+'''Instructions:
+Make sure to adjust the version numbers as per your specific needs or compatibility.
+If you use any other libraries not mentioned, add them accordingly.
+To install these dependencies, you can run:
+
+pip install -r requirements.txt'''
