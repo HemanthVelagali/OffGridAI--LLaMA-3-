@@ -1,22 +1,25 @@
-OffGridAI-(LLaMA 3)
-OffGridAI-(LLaMA 3) is a locally hosted, privacy-first chatbot powered by the LLaMA 3 model. It runs entirely offline on your machine, ensuring data security and confidentiality by eliminating the need for internet connections or third-party APIs. This project is designed for users who value control, customization, and privacy in their AI interactions.
+# **OffGridAI-(LLaMA 3)**
 
-Key Features
-Local AI Processing: All computations are done locally, ensuring maximum privacy.
-Powered by LLaMA 3: Built on Meta’s LLaMA 3 model for high-quality language understanding and generation.
-No Cloud Dependency: No need for APIs or internet access—everything runs on your hardware.
-Speech-to-Text: Integrated support for voice input and audio transcription.
-PDF Reading: Interact with AI based on the content of uploaded PDF files.
-Customizable: Easily add new features or swap models to tailor the assistant for your needs.
-Installation
-Prerequisites
-Install Python 3.x.
+**OffGridAI-(LLaMA 3)** is a locally hosted, privacy-first chatbot powered by the LLaMA 3 model. It runs entirely offline on your machine, ensuring data security and confidentiality by eliminating the need for internet connections or third-party APIs. This project is designed for users who value control, customization, and privacy in their AI interactions.
 
-Install necessary dependencies listed in requirements.txt:
+## **Key Features**
 
-bash
-Copy code
-pip install -r requirements.txt
+- **Local AI Processing**: All computations are done locally, ensuring maximum privacy.
+- **Powered by LLaMA 3**: Built on Meta’s LLaMA 3 model for high-quality language understanding and generation.
+- **No Cloud Dependency**: No need for APIs or internet access—everything runs on your hardware.
+- **Speech-to-Text**: Integrated support for voice input and audio transcription.
+- **PDF Reading**: Interact with AI based on the content of uploaded PDF files.
+- **Customizable**: Easily add new features or swap models to tailor the assistant for your needs.
+
+## **Installation**
+
+### **Prerequisites**
+
+1. Install [Python 3.x](https://www.python.org/downloads/).
+2. Install necessary dependencies listed in `requirements.txt`:
+
+   ```bash
+   pip install -r requirements.txt
 Install Ollama to load and run the LLaMA 3 model locally.
 
 Download the LLaMA 3 model using the ollama command:
