@@ -12,7 +12,7 @@ Installation
 Prerequisites
 Install Python 3.x.
 
-Install necessary dependencies listed in requirements.txt.
+Install necessary dependencies listed in requirements.txt:
 
 bash
 Copy code
@@ -24,7 +24,7 @@ Download the LLaMA 3 model using the ollama command:
 bash
 Copy code
 ollama pull llama3
-Once installed, ensure that Ollama is running and LLaMA 3 is loaded.
+Ensure that Ollama is running and the LLaMA 3 model is loaded.
 
 Running the Application
 Start the application:
