@@ -1,4 +1,4 @@
-#OffGridAI-(LLaMA 3)#
+OffGridAI-(LLaMA 3)
 OffGridAI-(LLaMA 3) is a locally hosted, privacy-first chatbot powered by the LLaMA 3 model. It runs entirely offline on your machine, ensuring data security and confidentiality by eliminating the need for internet connections or third-party APIs. This project is designed for users who value control, customization, and privacy in their AI interactions.
 
 Key Features
