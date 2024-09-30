@@ -24,8 +24,7 @@ Use code with caution.
 
 Install Ollama for local LLaMA 3 model execution:
 
-Bash
-pip install ollama
+    ```pip install ollama ```
 Use code with caution.
 
 Download the LLaMA 3 model: (Important Note: Refer to Meta's official guidelines for LLaMA 3 distribution and potential access requirements.)
