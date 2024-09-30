@@ -20,22 +20,24 @@
 
    ```bash
    pip install -r requirements.txt
-Install Ollama to load and run the LLaMA 3 model locally.
+## **Installation**
 
-Download the LLaMA 3 model using the ollama command:
-```bash
-   ollama pull llama3 
+1. **Install Ollama** to load and run the LLaMA 3 model locally.
 
-Ensure that Ollama is running and the LLaMA 3 model is loaded.
+2. **Download the LLaMA 3 model** using the `ollama` command:
 
-Running the Application
-Start the application:
+   ```bash
+   ollama pull llama3  pyhton app.py
+3.Ensure that Ollama is running and the LLaMA 3 model is loaded.
 
-bash
-Copy code
-python app.py
-Interact with the chatbot by accessing http://localhost:5000 in your browser.
+###**Running the Application**
+1.Start the application:
+      ```bash
+   ollama pull llama3  pyhton app.py```
 
+Interact with the chatbot by accessing###**[Running the Application](http://localhost:5000)** in your browser.
+
+   
 Usage
 Once the server is running, you can interact with the AI assistant locally. Features include:
 
