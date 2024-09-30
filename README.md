@@ -15,34 +15,24 @@
 
 **Prerequisites**
 
-1. **Download and install Python 3.x:** https://www.python.org/downloads/
+1. **Download and install Python 3.x:** [https://www.python.org/downloads/](https://www.python.org/downloads/)
 2. **Install required dependencies:**
 
    ```bash
    pip install -r requirements.txt
-Use code with caution.
-
-Install Ollama for local LLaMA 3 model execution:
-
-    ```pip install ollama ```
-Use code with caution.
+To install Ollama, run the command `pip install ollama`.
 
 Download the LLaMA 3 model: (Important Note: Refer to Meta's official guidelines for LLaMA 3 distribution and potential access requirements.)
 
-Bash
-ollama pull llama3
-Use code with caution.
+To install Ollama, run the command `ollama pull llama3`.
 
 Running the Application
 Ensure Ollama is running and the LLaMA 3 model is loaded successfully.
 
-Start the application:
+Start the application: `python app.py`.
 
-Bash
-python app.py
-Use code with caution.
 
-Access the chatbot: Open http://localhost:5000 in your web browser.
+Access the chatbot: Open ## http://localhost:5000 in your web browser.
 
 Usage
 After launching the server, you can interact with your AI assistant locally:
