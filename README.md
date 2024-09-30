@@ -20,18 +20,18 @@
 2. **Install required dependencies:**
 
    ```bash
-   pip install -r requirements.txt` 
+   pip install -r requirements.txt 
 
 3.  **To install Ollama, run the command:**
     
      ```bash
-     pip install -r requirements.tx`
+     pip install -r requirements.tx
    
     
 4.  **Download the LLaMA 3 model:** (Important Note: Refer to Meta's official guidelines for LLaMA 3 distribution and potential access requirements.)
     
     ```bash
-    pip install ollama  `
+    pip install ollama
 
 ## Running the Application
 
@@ -40,7 +40,7 @@
 2.  Start the application:
     
 	   ```bash
-	  python app.py ` 
+	  python app.py 
      
     
 3.  Access the chatbot: Open **[http://localhost:5000](http://localhost:5000)** in your web browser.
