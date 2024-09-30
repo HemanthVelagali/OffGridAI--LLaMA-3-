@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with LLaMA 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: radial-gradient(circle at 50% 50%, #ff00ff, #a100bf, #3d0074, #1c0033, #0d0017);
+            display: grid;
+            place-content: center;
+            width: 100%;
+    }
+        #chat-container {
+            height: 600px;
+            width: 600px;
+            
+    padding: 20px; /* Optional padding for content */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border-radius: 15px; /* Rounded corners */
+    backdrop-filter: blur(10px); /* Blur effect */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+    
+    
+    color: #fff; /* Text color */
+         width: 600px;
+            margin: auto;
+          
+        }
+        #chat-log {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            background: #fafafa;
+            padding: 20px; /* Optional padding for content */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border-radius: 15px; /* Rounded corners */
+    backdrop-filter: blur(10px); /* Blur effect */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+        }
+        .user-message {
+            color: #ffffff;
+            background-color: #00000021;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            width: fit-content;
+        }
+        .llm-message {
+            color: #ffffff;
+            background-color: #00000086;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px;
+            width: fit-content;
+        }
+        #user-input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            
+            color: white;
+        }
+        #user-input:hover{
+            border: none;
+            border-bottom: 2px solid black;
+            box-shadow: 0px 0px 5px black;
+            border-radius: 10px;
+            border-bottom: 2px solid white;
+            
+        }
+        #send-button, #stop-button, #clear-button, #speak-button, #microphone-button {
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 10px;
+            width: 100px;
+            background: none;
+            color: white;
+            height: 40px;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        #send-button:hover{
+            border: none;
+            background-color: #a100bf;
+            border-bottom: 2px solid white;
+        }
+        #stop-button:hover{
+            border: none;
+            background-color: #a100bf;
+            border-bottom: 2px solid white;
+        }
+        #clear-button:hover{
+            border: none;
+            background-color: #a100bf;
+            border-bottom: 2px solid white;
+        }
+        #speak-button:hover{
+            border: none;
+            background-color: #a100bf;
+            border-bottom: 2px solid white;
+        }
+        #microphone-button:hover{
+            border: none;
+            background-color: #a100bf;
+            border-bottom: 2px solid white;
+        }
+
+        
+h2{
+    text-align: center;
+    font-size: 25px;
+}
+#buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px;
+  
+}
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h2>Offline Chat Bot</h2>
+        <div id="chat-log"></div>
+        <input type="text" id="user-input" placeholder="Type your message..."  />
+        <button id="send-button">Send 🚀</button>
+        <button id="stop-button" disabled>Stop ❌</button>
+        <button id="clear-button">Clear 🗑️</button>
+        <button id="speak-button">speak 🔊</button>
+        <button id="microphone-button">mike 🎤</button> <!-- Microphone button -->
+
+        <div id="loading"></div>
+        <div id="error-message"></div>
+    </div>
+
+   
+    <script>
+        document.getElementById('microphone-button').onclick = async function() {
+    try {
+        const response = await fetch('/transcribe-audio', { method: 'POST' });
+        const data = await response.json();
+        
+        if (data.transcription) {
+            const userInputField = document.getElementById('user-input');
+            userInputField.value += (userInputField.value ? ' ' : '') + data.transcription; // Append transcription
+        } else {
+            console.error('No transcription returned');
+        }
+    } catch (error) {
+        console.error('Error during transcription:', error);
+    }
+};
+
+
+        document.getElementById('send-button').onclick = async function() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === "") return;
+
+            const chatLog = document.getElementById('chat-log');
+            chatLog.innerHTML += `<div class="user-message"><strong>You:</strong> ${userInput}</div>`;
+            document.getElementById('user-input').value = '';
+            document.getElementById('error-message').textContent = ''; // Clear previous error message
+
+            const sendButton = document.getElementById('send-button');
+            const stopButton = document.getElementById('stop-button');
+            sendButton.disabled = true;
+            stopButton.disabled = false; // Enable stop button
+            document.getElementById('loading').style.display = 'block';
+
+            controller = new AbortController(); // Initialize new AbortController to control the stream
+
+            try {
+                // Stream response from server
+                const response = await fetch('http://127.0.0.1:5000/stream-chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ input: userInput }),
+                    signal: controller.signal // Attach the abort signal to allow canceling
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Use ReadableStream to progressively display the response
+                const reader = response.body.getReader();
+                const llamaMessageContainer = document.createElement('div');
+                llamaMessageContainer.classList.add('llm-message');
+                llamaMessageContainer.innerHTML = `<strong>LLM:</strong> `;
+                chatLog.appendChild(llamaMessageContainer);
+
+                // Stream and display each chunk of data as it's received
+                const decoder = new TextDecoder();
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    llamaMessageContainer.innerHTML += decoder.decode(value);
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                }
+
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('Stream was aborted');
+                    document.getElementById('error-message').textContent = '';
+                } else {
+                    document.getElementById('error-message').textContent = 'Error: ' + error.message;
+                }
+            } finally {
+                sendButton.disabled = false;
+                stopButton.disabled = true; // Disable stop button when request completes or stops
+                document.getElementById('loading').style.display = 'none';
+            }
+        };
+
+        document.getElementById('stop-button').onclick = function() {
+            if (controller) {
+                controller.abort(); // Cancel the current request/stream
+                controller = null; // Reset controller for the next request
+            }
+        };
+
+        document.getElementById('clear-button').onclick = function() {
+            document.getElementById('chat-log').innerHTML = '';
+        };
+
+        // Function to handle speech synthesis
+        function speakText(text) {
+            const speechSynthesis = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = speechSynthesis.getVoices().find(voice => voice.name === 'Google UK English Female') || speechSynthesis.getVoices()[0]; // Choose a voice
+            utterance.pitch = 1; // Adjust pitch if needed
+            utterance.rate = 1;  // Adjust rate if needed
+            speechSynthesis.speak(utterance);
+        }
+
+        // Trigger speaking the latest LLM response
+        function speakLatestResponse() {
+            const llmMessages = document.querySelectorAll('.llm-message'); // Select all LLM messages
+            if (llmMessages.length > 0) {
+                const latestResponse = llmMessages[llmMessages.length - 1].textContent; // Get the text of the last LLM response
+                speakText(latestResponse.replace('LLM:', '').trim()); // Speak the latest response, removing the 'LLM:' label
+            }
+        }
+
+        document.getElementById('speak-button').onclick = function() {
+            speakLatestResponse(); // Speak only the latest LLM response
+        };
+    </script>
+</body>
+</html>
